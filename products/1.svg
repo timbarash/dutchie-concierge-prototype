@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f8faf8"/>
+      <stop offset="100%" stop-color="#e8f0e8"/>
+    </radialGradient>
+    <radialGradient id="bud1a" cx="40%" cy="35%" r="50%">
+      <stop offset="0%" stop-color="#8BC34A"/>
+      <stop offset="40%" stop-color="#6DAF3C"/>
+      <stop offset="100%" stop-color="#4A8A2A"/>
+    </radialGradient>
+    <radialGradient id="bud1b" cx="60%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#7ECBB4"/>
+      <stop offset="50%" stop-color="#5BA88E"/>
+      <stop offset="100%" stop-color="#3D7A62"/>
+    </radialGradient>
+    <radialGradient id="bud1c" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#A8D86A"/>
+      <stop offset="60%" stop-color="#7CB342"/>
+      <stop offset="100%" stop-color="#558B2F"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg1)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Main bud cluster -->
+  <ellipse cx="100" cy="95" rx="42" ry="48" fill="url(#bud1a)" opacity="0.9"/>
+  <ellipse cx="85" cy="85" rx="30" ry="35" fill="url(#bud1b)" opacity="0.85"/>
+  <ellipse cx="115" cy="80" rx="28" ry="32" fill="url(#bud1c)" opacity="0.8"/>
+  <ellipse cx="95" cy="105" rx="25" ry="28" fill="url(#bud1a)" opacity="0.7"/>
+  <!-- Calyx bumps -->
+  <circle cx="78" cy="72" r="10" fill="#6DAF3C" opacity="0.6"/>
+  <circle cx="108" cy="68" r="12" fill="#5BA88E" opacity="0.5"/>
+  <circle cx="120" cy="90" r="9" fill="#7ECBB4" opacity="0.6"/>
+  <circle cx="90" cy="110" r="11" fill="#8BC34A" opacity="0.5"/>
+  <circle cx="105" cy="100" r="8" fill="#5BA88E" opacity="0.5"/>
+  <!-- Trichome sparkle -->
+  <circle cx="88" cy="78" r="2" fill="white" opacity="0.7"/>
+  <circle cx="102" cy="72" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="112" cy="85" r="2" fill="white" opacity="0.5"/>
+  <circle cx="95" cy="95" r="1.5" fill="white" opacity="0.6"/>
+  <circle cx="80" cy="90" r="1" fill="white" opacity="0.7"/>
+  <!-- Orange pistils -->
+  <path d="M85 75 Q80 68 76 65" stroke="#E8A045" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M105 70 Q108 63 112 60" stroke="#D4944A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M118 88 Q124 84 127 80" stroke="#E8A045" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <path d="M92 108 Q88 114 85 118" stroke="#D4944A" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Small sugar leaves -->
+  <path d="M65 100 Q55 90 60 78 Q68 85 65 100Z" fill="#7CB342" opacity="0.6"/>
+  <path d="M135 95 Q145 85 140 73 Q132 80 135 95Z" fill="#6DAF3C" opacity="0.5"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="155" rx="35" ry="6" fill="#000" opacity="0.08"/>
+</svg>

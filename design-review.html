@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartShelf AI Concierge — Design Review</title>
+<style>
+  :root {
+    --green: #1a2e1a;
+    --green-light: #2d4a2d;
+    --green-mid: #3a5c3a;
+    --green-bg: #e8f0e8;
+    --sage: #dce8dc;
+    --cream: #f5f0e8;
+    --cream-dark: #ebe4d8;
+    --gold: #d4a843;
+    --gold-light: #f5ecd4;
+    --gold-dark: #b8922e;
+    --text: #1a1a1a;
+    --text-secondary: #4a4a4a;
+    --text-muted: #777;
+    --border: #d8d0c4;
+    --white: #ffffff;
+    --sidebar-w: 290px;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    line-height: 1.7;
+  }
+
+  /* ---- Sidebar ---- */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: linear-gradient(180deg, #1a2e1a 0%, #142414 100%);
+    color: #fff;
+    overflow-y: auto;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(212,168,67,0.15);
+  }
+
+  .sidebar-header {
+    padding: 32px 28px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.15);
+  }
+
+  .sidebar-logo {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--green);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+  }
+
+  .sidebar-header h1 {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .sidebar-header p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.5;
+  }
+
+  .sidebar nav {
+    flex: 1;
+    padding: 20px 0;
+    overflow-y: auto;
+  }
+
+  .sidebar nav a {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 10px 28px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .sidebar nav a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+    border-left-color: var(--gold);
+  }
+
+  .sidebar nav a .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--green);
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sidebar-footer {
+    padding: 20px 28px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    line-height: 1.6;
+    background: rgba(0,0,0,0.1);
+  }
+
+  /* ---- Main ---- */
+  .main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+  }
+
+  /* ---- Hero Header ---- */
+  .page-header {
+    background: linear-gradient(135deg, #0d1f0d 0%, #1a3520 25%, #1a2e1a 50%, #0f2a1a 75%, #0d1f0d 100%);
+    color: #fff;
+    padding: 72px 64px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(212,168,67,0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .page-header .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212,168,67,0.12);
+    border: 1px solid rgba(212,168,67,0.25);
+    border-radius: 24px;
+    padding: 6px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .page-header h2 {
+    font-size: 44px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header h2 span {
+    background: linear-gradient(135deg, var(--gold), #e8c060);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .page-header .subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+    max-width: 660px;
+    line-height: 1.65;
+    position: relative;
+    z-index: 1;
+    font-weight: 400;
+  }
+
+  .page-header .meta {
+    margin-top: 32px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .page-header .meta-item {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .page-header .meta-item strong {
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+  }
+
+  .page-header .proto-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 28px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .page-header .proto-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(212,168,67,0.3);
+  }
+
+  /* ---- Content ---- */
+  .content {
+    max-width: 900px;
+    padding: 56px 64px 96px;
+  }
+
+  .note-box {
+    background: var(--sage);
+    border-left: 4px solid var(--green-light);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    font-size: 14px;
+    color: var(--green);
+    line-height: 1.7;
+  }
+
+  .note-box a {
+    color: var(--green);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 3px;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    margin-bottom: 72px;
+    scroll-margin-top: 24px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--green);
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(212,168,67,0.3);
+  }
+
+  .section h3 {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .section p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  .section strong {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .section h4 {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--green);
+    margin-top: 32px;
+    margin-bottom: 12px;
+    letter-spacing: -0.01em;
+  }
+
+  .section ul, .section ol {
+    padding-left: 24px;
+    margin-bottom: 16px;
+  }
+
+  .section li {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    line-height: 1.7;
+  }
+
+  .section li strong {
+    color: var(--text);
+  }
+
+  .thesis {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--green);
+    border-left: 4px solid var(--gold);
+    padding: 16px 24px;
+    margin: 24px 0;
+    background: var(--sage);
+    border-radius: 0 12px 12px 0;
+    line-height: 1.6;
+  }
+
+  .callout {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 24px 0 28px;
+    box-shadow: 0 2px 12px rgba(26,46,26,0.04);
+  }
+
+  .callout-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .callout-label::before {
+    content: '';
+    width: 4px;
+    height: 14px;
+    background: var(--gold);
+    border-radius: 2px;
+  }
+
+  .callout p {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 56px 0;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0 24px;
+  }
+
+  .grid-2 .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 2px 12px rgba(26,46,26,0.04);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .grid-2 .card:hover {
+    box-shadow: 0 4px 20px rgba(26,46,26,0.08);
+    transform: translateY(-1px);
+  }
+
+  .grid-2 .card h5 {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--green);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .grid-2 .card h5::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+
+  .grid-2 .card p {
+    font-size: 13.5px;
+    margin-bottom: 0;
+    line-height: 1.65;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 18px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: var(--sage);
+    color: var(--green);
+    border: 1px solid rgba(26,46,26,0.1);
+  }
+
+  .tag.gold {
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    border-color: rgba(212,168,67,0.25);
+  }
+
+  table.spec-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0 24px;
+    font-size: 14px;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(26,46,26,0.04);
+    border: 1px solid var(--border);
+  }
+
+  table.spec-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    background: var(--green);
+    padding: 12px 16px;
+  }
+
+  table.spec-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  table.spec-table td:first-child {
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  table.spec-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  table.spec-table tr:nth-child(even) td {
+    background: rgba(245,240,232,0.5);
+  }
+
+  /* ---- Mockup Device Frames ---- */
+  .mockup-frame {
+    margin: 28px 0 32px;
+    text-align: center;
+  }
+
+  .mockup-frame img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(26,46,26,0.12), 0 2px 8px rgba(26,46,26,0.06);
+    display: block;
+  }
+
+  .mockup-frame .caption {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: 0.01em;
+  }
+
+  .mockup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 28px 0 32px;
+  }
+
+  .mockup-grid .mockup-frame {
+    margin: 0;
+  }
+
+  /* ---- Flow Diagrams ---- */
+  .flow-diagram {
+    margin: 28px 0 32px;
+    padding: 32px;
+    background: var(--white);
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 12px rgba(26,46,26,0.04);
+    overflow-x: auto;
+  }
+
+  .flow-diagram .flow-title {
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold-dark);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .flow-h {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+
+  .flow-v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .flow-box {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  .flow-box.green {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .flow-box.cream {
+    background: var(--cream-dark);
+    color: var(--green);
+    border: 1px solid var(--border);
+  }
+
+  .flow-box.gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--green);
+  }
+
+  .flow-box.sage {
+    background: var(--sage);
+    color: var(--green);
+    border: 1px solid rgba(26,46,26,0.1);
+  }
+
+  .flow-box.white-b {
+    background: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+  }
+
+  .flow-box small {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+
+  .flow-arrow-r {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    flex-shrink: 0;
+  }
+
+  .flow-arrow-r::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: var(--gold);
+    position: relative;
+  }
+
+  .flow-arrow-r::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 0;
+    position: absolute;
+  }
+
+  .flow-arrow-r-wrap {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-arrow-r-wrap .line {
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .flow-arrow-r-wrap .head {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid var(--gold);
+  }
+
+  .flow-arrow-d {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 2px 0;
+  }
+
+  .flow-arrow-d .line {
+    width: 2px;
+    height: 20px;
+    background: var(--gold);
+  }
+
+  .flow-arrow-d .head {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--gold);
+  }
+
+  .flow-arrow-bidi {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .flow-arrow-bidi .head-l {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 8px solid var(--gold);
+  }
+
+  .flow-arrow-bidi .line {
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+  }
+
+  .flow-arrow-bidi .head-r {
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 8px solid var(--gold);
+  }
+
+  .flow-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 4px 0;
+  }
+
+  .flow-branch {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .flow-branch-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .flow-branch-item .flow-sub {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-align: center;
+    max-width: 100px;
+    line-height: 1.3;
+  }
+
+  /* Code/Technical blocks */
+  .tech-block {
+    background: var(--green);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0 20px;
+    font-size: 13px;
+    line-height: 1.6;
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  }
+
+  .tech-block .label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 10px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1000px) {
+    .sidebar {
+      position: static;
+      width: 100%;
+      height: auto;
+      max-height: none;
+    }
+
+    .sidebar nav {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 12px 20px;
+      gap: 0;
+    }
+
+    .sidebar nav a {
+      padding: 8px 14px;
+      font-size: 12px;
+      border-left: none;
+      border-bottom: 2px solid transparent;
+    }
+
+    .sidebar nav a:hover {
+      border-left: none;
+      border-bottom-color: var(--gold);
+    }
+
+    .main {
+      margin-left: 0;
+    }
+
+    .page-header {
+      padding: 40px 32px;
+    }
+
+    .page-header h2 {
+      font-size: 32px;
+    }
+
+    .content {
+      padding: 40px 32px 72px;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr;
+    }
+
+    .mockup-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .flow-h {
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .sidebar-header {
+      padding: 20px 16px 14px;
+    }
+
+    .page-header {
+      padding: 32px 20px;
+    }
+
+    .page-header h2 {
+      font-size: 26px;
+    }
+
+    .page-header .subtitle {
+      font-size: 15px;
+    }
+
+    .content {
+      padding: 28px 20px 56px;
+    }
+
+    .section h3 {
+      font-size: 22px;
+    }
+
+    .flow-diagram {
+      padding: 20px 16px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Sidebar TOC -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">SS</div>
+    <h1>SmartShelf AI Concierge</h1>
+    <p>Design Review &amp; Production Brief</p>
+  </div>
+  <nav>
+    <a href="#s1"><span class="num">01</span> Vision &amp; Why We Built This</a>
+    <a href="#s2"><span class="num">02</span> Two Interaction Modes</a>
+    <a href="#s3"><span class="num">03</span> The Smart Shelf Concept</a>
+    <a href="#s4"><span class="num">04</span> Three Browse Paradigms</a>
+    <a href="#s5"><span class="num">05</span> Personalization Engine</a>
+    <a href="#s6"><span class="num">06</span> Product Detail Experience</a>
+    <a href="#s7"><span class="num">07</span> Smart Cart &amp; Upsell</a>
+    <a href="#s8"><span class="num">08</span> Loyalty &amp; Gamification</a>
+    <a href="#s9"><span class="num">09</span> Brand &amp; Visual Identity</a>
+    <a href="#s10"><span class="num">10</span> Home Screen Composition</a>
+    <a href="#s11"><span class="num">11</span> AI Query System</a>
+    <a href="#s12"><span class="num">12</span> The Concierge Mode</a>
+    <a href="#s13"><span class="num">13</span> Product Catalog Design</a>
+    <a href="#s14"><span class="num">14</span> What's Next</a>
+  </nav>
+  <div class="sidebar-footer">
+    Dutchie &middot; AI Concierge Team<br>
+    March 2026
+  </div>
+</aside>
+
+<!-- Main content -->
+<div class="main">
+
+  <!-- Hero Header -->
+  <div class="page-header">
+    <div class="badge">Design Review</div>
+    <h2>SmartShelf <span>AI Concierge</span></h2>
+    <p class="subtitle">
+      A prototype for AI-native dispensary shopping &mdash; where the store reshapes itself around what you want, instead of making you hunt through grids and filters.
+    </p>
+    <div class="meta">
+      <div class="meta-item"><strong>Status:</strong> Prototype</div>
+      <div class="meta-item"><strong>Stack:</strong> React / TypeScript / Tailwind / Framer Motion</div>
+      <div class="meta-item"><strong>AI Backend:</strong> Gemini (open-ended) + local pattern matching</div>
+      <div class="meta-item"><strong>Updated:</strong> March 2026</div>
+    </div>
+    <a href="/" class="proto-link">View Live Prototype &rarr;</a>
+  </div>
+
+  <div class="content">
+
+    <div class="note-box">
+      This document accompanies the live prototype. It is intended to brief a senior engineering team on what the prototype demonstrates, why each design decision was made, and what production needs to preserve vs. rebuild. This is a product and design document, not a technical spec.
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  FLOW DIAGRAM: User Journey (placed before sections)         -->
+    <!-- ============================================================ -->
+    <div class="flow-diagram">
+      <div class="flow-title">User Journey Flow</div>
+      <div class="flow-h">
+        <div class="flow-box green">Home<small>Intent capture</small></div>
+        <div class="flow-arrow-r-wrap"><div class="line"></div><div class="head"></div></div>
+        <div class="flow-box cream">Browse / Search<small>AI-powered shelves</small></div>
+        <div class="flow-arrow-r-wrap"><div class="line"></div><div class="head"></div></div>
+        <div class="flow-box sage">Product Detail<small>Terpenes &amp; spectrum</small></div>
+        <div class="flow-arrow-r-wrap"><div class="line"></div><div class="head"></div></div>
+        <div class="flow-box gold">Cart<small>Smart upsell</small></div>
+        <div class="flow-arrow-r-wrap"><div class="line"></div><div class="head"></div></div>
+        <div class="flow-box green">Checkout<small>Loyalty + delivery</small></div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!--  Section 1 — Vision                                          -->
+    <!-- ============================================================ -->
+    <section class="section" id="s1">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <h3>Vision &amp; Why We Built This</h3>
+      </div>
+
+      <div class="thesis">
+        AI should reshape the store around the shopper, not just answer questions in a chatbox bolted to the side of an unchanged product grid.
+      </div>
+
+      <p>Dispensary shopping is uniquely challenging. Customers face a wall of products differentiated by unfamiliar variables &mdash; strain types, terpene profiles, THC percentages, onset times, consumption methods. The result is <strong>choice paralysis at scale</strong>. Customers either default to what they already know or ask a budtender, creating a staffing bottleneck at the counter.</p>
+
+      <p>Every major dispensary platform today offers the same experience: category sidebar, filter dropdowns, product grid, search bar. AI integrations, when they exist, are typically a chat widget in the corner &mdash; a separate lane from the actual shopping surface. The customer has to toggle between "browsing mode" and "asking mode."</p>
+
+      <p>Our thesis is different. <strong>The AI response should be the shopping surface itself.</strong> When a customer says "something for sleep," the entire page should reorganize to show sleep-relevant products, annotated with why each one fits, sorted by the customer's personal terpene preferences. No chat bubble. No separate window. The store just... changes.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/home.png" alt="Full home page with 3-tier header, category tiles, and personalized shelves">
+        <div class="caption">Full home page showing the 3-tier header, category tiles, quick intent pills, and personalized product shelves</div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Cannabis retail has a higher need for guided selling than almost any other retail vertical. Customers literally cannot evaluate products from packaging alone. The industry-standard solution (human budtenders) does not scale to digital. AI that reshapes the store surface is the digital equivalent of a knowledgeable budtender walking you to the right shelf and explaining why each product fits your situation.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 2 — Two Interaction Modes                           -->
+    <!-- ============================================================ -->
+    <section class="section" id="s2">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <h3>Two Interaction Modes</h3>
+      </div>
+
+      <div class="thesis">
+        Smart Shelf is for shoppers who want to browse with AI guidance. Concierge is for shoppers who want to hand the wheel to the AI entirely.
+      </div>
+
+      <!-- Two Modes Architecture Diagram -->
+      <div class="flow-diagram">
+        <div class="flow-title">Two Modes Architecture</div>
+        <div class="flow-h" style="gap: 0;">
+          <div class="flow-box green" style="min-width: 180px;">
+            Smart Shelf
+            <small>Browse-first, AI-reactive</small>
+          </div>
+          <div class="flow-arrow-bidi">
+            <div class="head-l"></div>
+            <div class="line" style="width: 48px;"></div>
+            <div class="head-r"></div>
+          </div>
+          <div class="flow-box gold" style="min-width: 180px;">
+            Concierge
+            <small>Conversation-first, AI-driven</small>
+          </div>
+        </div>
+        <div class="flow-label" style="margin-top: 12px;">Shared cart state &amp; user profile across both modes</div>
+        <div style="display:flex; justify-content:center; margin-top: 16px; gap: 32px; flex-wrap: wrap;">
+          <div style="text-align:center; max-width: 200px;">
+            <div style="font-size:11px; font-weight:700; color:var(--green); margin-bottom:4px;">When to browse</div>
+            <div style="font-size:11px; color:var(--text-muted);">Quick tasks, category shopping, deal hunting</div>
+          </div>
+          <div style="text-align:center; max-width: 200px;">
+            <div style="font-size:11px; font-weight:700; color:var(--gold-dark); margin-bottom:4px;">When to converse</div>
+            <div style="font-size:11px; color:var(--text-muted);">Complex questions, kit building, education</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <h5>Smart Shelf</h5>
+          <p>AI-reactive store surface. Looks like a normal dispensary e-commerce page &mdash; header, product grid, categories &mdash; but a search input at the top accepts natural language and <strong>reshapes the page around the query</strong>. Products remain visible at all times. The AI annotates, reorders, and groups them. Light theme, familiar retail layout.</p>
+        </div>
+        <div class="card">
+          <h5>Concierge</h5>
+          <p>Full-screen conversational agent. Dark, immersive UI. The AI concierge IS the store. No product grids, no category nav. The user talks and the UI assembles product cards, comparisons, bundles, and recommendations <strong>inside the conversation thread</strong>. Think "personal shopper in a chat."</p>
+        </div>
+      </div>
+
+      <div class="mockup-grid">
+        <div class="mockup-frame">
+          <img src="mockups/home.png" alt="Smart Shelf mode showing the browsable store surface">
+          <div class="caption">Smart Shelf mode — familiar retail layout with AI-reactive shelves</div>
+        </div>
+        <div class="mockup-frame">
+          <img src="mockups/concierge.png" alt="Full-screen Concierge conversational agent">
+          <div class="caption">Concierge mode — full-screen conversational shopping agent</div>
+        </div>
+      </div>
+
+      <p><strong>When users reach for each mode:</strong></p>
+      <ul>
+        <li><strong>Smart Shelf</strong> &mdash; "I want to browse edibles." "Show me today's deals." Quick, directed shopping tasks where the customer has some idea of what they want and wants to see the full assortment with AI help.</li>
+        <li><strong>Concierge</strong> &mdash; "Build me a weekend kit for two." "I'm new to cannabis, what's a good starting point?" Complex multi-turn questions, education-heavy sessions, and "assemble something for me" requests where the customer wants the AI to drive.</li>
+      </ul>
+
+      <p>A toggle between modes lives in the sticky nav bar. Shared cart state persists across both modes so a customer can start in Concierge ("what's good for anxiety?"), get a recommendation, switch to Smart Shelf to compare that product against others in the category, and check out without losing context.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Forcing all AI interaction through a chat window alienates browse-oriented shoppers. Forcing all interaction through a product grid alienates discovery-oriented shoppers. The two-mode architecture meets both intents without compromising either experience.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 3 — The Smart Shelf Concept                         -->
+    <!-- ============================================================ -->
+    <section class="section" id="s3">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <h3>The Smart Shelf Concept</h3>
+      </div>
+
+      <div class="thesis">
+        The core innovation: instead of chat bubbles, the AI response IS the page. Dynamic "shelves" build and reshape as the user queries. Products are always visible &mdash; the AI annotates and reorders them, never hides them behind a conversation.
+      </div>
+
+      <p>When a customer types a query &mdash; "what's good for sleep?" &mdash; the system generates one or more <strong>shelves</strong>: horizontal or grid sections of the page, each with a title, subtitle, optional AI annotation badge, and a set of products. The page scrolls to the new shelf content with smooth animation. The previous home-screen shelves are replaced.</p>
+
+      <p>This is fundamentally different from a chatbot. There is no conversation thread on screen. There are no "user" and "assistant" message bubbles. The customer asks; the store surface changes. The search bar resets, ready for the next question. Breadcrumbs show where you are ("Home &gt; 'What's good for sleep?'") and a single click returns to the home layout.</p>
+
+      <div class="mockup-grid">
+        <div class="mockup-frame">
+          <img src="mockups/query-sleep.png" alt="AI query: What's good for sleep?">
+          <div class="caption">Natural language query — "What's good for sleep?"</div>
+        </div>
+        <div class="mockup-frame">
+          <img src="mockups/query-sleep-results.png" alt="AI-generated shelf results for sleep query">
+          <div class="caption">The store reshapes into sleep-optimized shelves with AI annotations</div>
+        </div>
+      </div>
+
+      <h4>Shelf Anatomy</h4>
+      <p>Every shelf has:</p>
+      <ul>
+        <li><strong>Title</strong> &mdash; what this shelf contains ("Best for Sleep," "Your Regulars," "Today's Deals")</li>
+        <li><strong>Subtitle</strong> &mdash; context for why these products are shown ("Matched to your myrcene preference")</li>
+        <li><strong>AI Note badge</strong> &mdash; a green pill in the top-right with a sparkle icon explaining the AI's reasoning ("OG Kush has the terpene profile you gravitate toward")</li>
+        <li><strong>Product cards</strong> &mdash; each with an optional <strong>reason chip</strong> ("Terpene match," "94% match," "Purchased before") and optional <strong>match score</strong> percentage</li>
+      </ul>
+
+      <p>The key UX principle: <strong>products are never hidden.</strong> Even when the AI is "thinking" (loading state), skeleton cards are visible in the grid. The transition from home to results is a page reshape, not a mode switch. The customer always feels like they are in a store, not in a chatbot.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Every chatbot-based product recommendation UI has the same problem: the customer sees text, then has to mentally connect it to products they can't see. The shelf model keeps products in their natural visual format &mdash; image, price, rating, add-to-cart button &mdash; while layering AI annotation directly onto the card. The cognitive overhead is near zero.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 4 — Three Browse Paradigms                          -->
+    <!-- ============================================================ -->
+    <section class="section" id="s4">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <h3>Three Browse Paradigms</h3>
+      </div>
+
+      <div class="thesis">
+        Category, Effect, and Terpene browsing are not just filter options &mdash; they are three fundamentally different mental models for how cannabis shoppers think about what they want.
+      </div>
+
+      <!-- Browse Mode Switcher Diagram -->
+      <div class="flow-diagram">
+        <div class="flow-title">Browse Mode Switcher</div>
+        <div class="flow-branch">
+          <div class="flow-branch-item">
+            <div class="flow-box green" style="min-width: 140px;">Category<small>Product types</small></div>
+            <div style="margin-top: 8px;">
+              <div class="flow-sub">Flower, Edibles, Vapes, Pre-Rolls, Topicals, Tinctures</div>
+            </div>
+          </div>
+          <div class="flow-branch-item">
+            <div class="flow-box gold" style="min-width: 140px;">Effect<small>Desired experience</small></div>
+            <div style="margin-top: 8px;">
+              <div class="flow-sub">Relaxed, Happy, Creative, Sleepy, Calm, Energetic, Focused</div>
+            </div>
+          </div>
+          <div class="flow-branch-item">
+            <div class="flow-box sage" style="min-width: 140px;">Terpene<small>Flavor science</small></div>
+            <div style="margin-top: 8px;">
+              <div class="flow-sub">Myrcene, Caryophyllene, Limonene, Linalool, Pinene, Ocimene</div>
+            </div>
+          </div>
+        </div>
+        <div class="flow-label" style="margin-top: 16px;">Three mental models: "I know the product type" &rarr; "I know the feeling" &rarr; "I know the science"</div>
+      </div>
+
+      <p>The sticky navigation bar has a <strong>mode switcher</strong> (three small pills: Category, Effect, Terpene) that transforms the tab row beneath it. Each mode has its own set of tabs, its own "all" view with a visual explorer, and its own sorting logic for product results.</p>
+
+      <h4>Category Mode</h4>
+      <p>The familiar paradigm: Flower, Edibles, Vapes, Pre-Rolls, Topicals, Tinctures. The "For You" default tab shows the personalized home screen. Clicking a category tab shows all products in that category, sorted by rating. This is the baseline mental model &mdash; "I know I want an edible."</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/categories-picks.png" alt="Category tiles and Picked For You shelf">
+        <div class="caption">Category tile grid with "Picked For You" personalized shelf below</div>
+      </div>
+
+      <h4>Effect Mode</h4>
+      <p>Nine effect categories: Relaxed, Happy, Creative, Sleepy, Calm, Energetic, Uplifted, Focused, Pain Relief. The "all" view is a <strong>visual explorer</strong> &mdash; a grid of gradient-colored cards, each with an emoji, product count, evocative description ("Lights out in 45 minutes. Guaranteed."), and preview of top products. Clicking an effect filters to all products with that effect tag, annotated with match scores for returning customers. An "Effect Spectrum" bar visualization shows the energizing-to-sedating continuum.</p>
+
+      <div class="mockup-grid">
+        <div class="mockup-frame">
+          <img src="mockups/effect-mode.png" alt="Effect browse mode with effect categories">
+          <div class="caption">Effect browse mode — nine experience-based categories</div>
+        </div>
+        <div class="mockup-frame">
+          <img src="mockups/effect-explorer.png" alt="Effect explorer with gradient cards">
+          <div class="caption">Effect explorer — visual cards with product counts and descriptions</div>
+        </div>
+      </div>
+
+      <h4>Terpene Mode</h4>
+      <p>Seven terpene categories: Myrcene, Caryophyllene, Limonene, Linalool, Terpinolene, Ocimene, Pinene. The "all" view is a terpene explorer &mdash; cards showing each terpene's name, emoji, aroma profile, product count, average concentration bar, expected effect ("Pain Relief &amp; Calm"), and a short educational description. Clicking a terpene shows all products containing it, <strong>sorted by concentration</strong> (not rating), with the percentage displayed on each card.</p>
+
+      <div class="mockup-grid">
+        <div class="mockup-frame">
+          <img src="mockups/terpene-mode.png" alt="Terpene browse mode with terpene tabs">
+          <div class="caption">Terpene browse mode — science-first navigation paradigm</div>
+        </div>
+        <div class="mockup-frame">
+          <img src="mockups/terpene-explorer.png" alt="Terpene explorer visualization">
+          <div class="caption">Terpene explorer — educational cards with aroma profiles and concentrations</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">Why Terpene Browsing Matters</div>
+        <p><strong>Terpenes are the real driver of the cannabis experience.</strong> The indica/sativa/hybrid classification is genetically outdated &mdash; most modern strains are polyhydrids. Two "indicas" can produce completely different effects depending on their terpene profiles. A high-myrcene flower will be sedating; a high-limonene one will be uplifting &mdash; regardless of what the label says. Terpene-first browsing gives informed customers the navigation paradigm that actually predicts their experience, and educates new customers about what actually matters. No other dispensary platform offers this as a primary browse mode.</p>
+      </div>
+
+      <p>The Terpene Explorer also includes an <strong>Aroma Guide</strong> callout that explicitly states: "Forget indica vs. sativa &mdash; terpenes are what actually determine your experience." This is an intentional educational intervention at the point of browsing.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 5 — Personalization Engine                          -->
+    <!-- ============================================================ -->
+    <section class="section" id="s5">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <h3>Personalization Engine</h3>
+      </div>
+
+      <div class="thesis">
+        Every product in the store is silently scored against the customer's taste profile. The AI doesn't just recommend &mdash; it annotates every product with "why this matches you."
+      </div>
+
+      <!-- Personalization Data Flow Diagram -->
+      <div class="flow-diagram">
+        <div class="flow-title">Personalization Data Flow</div>
+        <div class="flow-v">
+          <div class="flow-h" style="gap: 12px;">
+            <div class="flow-box cream">Purchase History<small>23 orders, 11 products</small></div>
+            <div class="flow-box cream">Preferences<small>Strain, effects, budget</small></div>
+            <div class="flow-box cream">Behavior<small>Browse patterns</small></div>
+          </div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-box gold" style="min-width: 240px;">Taste Profile<small>Terpene affinity + effect preferences + price fit</small></div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-h" style="gap: 12px;">
+            <div class="flow-box green">Match Scores<small>94% match, 87% match...</small></div>
+            <div class="flow-box green">Recommendations<small>"Picked For You" shelf</small></div>
+            <div class="flow-box green">Annotations<small>"Why this matches"</small></div>
+          </div>
+        </div>
+      </div>
+
+      <p>The prototype simulates a returning customer ("Alex") with a complete profile:</p>
+
+      <table class="spec-table">
+        <tr><th>Attribute</th><th>Value</th><th>How It's Used</th></tr>
+        <tr><td>Preferred Strain</td><td>Hybrid</td><td>Sort order bias, match score boost</td></tr>
+        <tr><td>Top Effects</td><td>Relaxed, Creative, Happy</td><td>Effect match scoring, AI note generation</td></tr>
+        <tr><td>Favorite Terpenes</td><td>Myrcene, Limonene, Caryophyllene</td><td>Terpene overlap scoring (3 pts per match)</td></tr>
+        <tr><td>Tolerance</td><td>Moderate</td><td>Dosing context in recommendations</td></tr>
+        <tr><td>Typical Budget</td><td>$85</td><td>Price-appropriate suggestions</td></tr>
+        <tr><td>Purchase History</td><td>23 orders, 11 distinct products</td><td>Reorder shelf, "purchased before" tags</td></tr>
+        <tr><td>Loyalty Points</td><td>485 (Silver tier)</td><td>Tier visualization, points-earning previews</td></tr>
+      </table>
+
+      <h4>"For You" Shelf</h4>
+      <p>The default home screen leads with a "Picked For You" shelf. Each product shows a <strong>match score</strong> (e.g., "94% match") and a reason chip ("Terpene match," "Strain match," "Taste profile match"). The scoring algorithm weights terpene overlap highest (3 points per shared terpene), then category fit, strain type match, effect overlap, price fit, and rating. This means two products in the same category can have very different match scores based on their terpene profiles.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/categories-picks.png" alt="Picked For You shelf with match scores">
+        <div class="caption">"Picked For You" shelf with personalized match scores and reason chips on each product card</div>
+      </div>
+
+      <h4>Reorder Shelf</h4>
+      <p>"Buy Again" surfaces products from purchase history, sorted by purchase frequency. Products bought 2+ times surface first. The query "reorder my usual" generates a dedicated reorder shelf with lifetime stats ("Based on 23 orders, $1,847 lifetime").</p>
+
+      <h4>Profile-Aware AI Annotations</h4>
+      <p>When the AI responds to any query, it references the taste profile. "Show me flower" returns flower sorted by rating but annotated with "Sorted for your hybrid preference." "What's good for sleep?" returns sleep products but notes "OG Kush has the terpene profile you gravitate toward." This ambient personalization is the key differentiator &mdash; the AI never just shows generic results.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Cannabis is a high-repeat-purchase vertical. The average dispensary customer visits 2-3 times per month. Personalization that remembers and adapts to their terpene preferences, budget patterns, and consumption history reduces decision time dramatically and increases average order value. The "why this matches you" annotation is the digital equivalent of a budtender saying "based on what you liked last time, you'll love this."</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 6 — Product Detail Experience                       -->
+    <!-- ============================================================ -->
+    <section class="section" id="s6">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <h3>Product Detail Experience</h3>
+      </div>
+
+      <div class="thesis">
+        The product detail view is not a separate page &mdash; it's a slide-over panel that keeps the shopping context visible. Every element is designed to answer the question: "Is this the right product for me?"
+      </div>
+
+      <p>Clicking any product card opens a right-side slide-over panel (440px on desktop, full-screen on mobile) with spring animation. The panel layers over the shelf content rather than navigating away, preserving the customer's browsing context.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/product-detail.png" alt="Product detail with strain spectrum and terpene profile">
+        <div class="caption">Product detail panel — strain spectrum visualization, animated terpene bars, effects tags, and add-to-cart</div>
+      </div>
+
+      <h4>Hero Image with Brand Gradient</h4>
+      <p>The top of the panel is a 280px image area with a subtle gradient derived from the product's brand color. This creates visual brand identity without heavy branding &mdash; a PAX product has an indigo tint, a Cookies product has a blue tint, a Raw Garden product has a green tint. The product image is centered and drops a shadow for depth.</p>
+
+      <h4>Strain Spectrum Visualization</h4>
+      <p>Below the hero, a horizontal gradient bar runs from purple (indica) through green (hybrid) to orange (sativa). A positioned dot marker shows where this product falls on the spectrum. Below the bar, a one-line description explains what this position means: "Full-body relaxation &mdash; best for evening wind-down" for indica, "Energizing &amp; uplifting &mdash; great for daytime activities" for sativa. This replaces the typically unhelpful "Indica" text badge with a visual that communicates the actual expected experience.</p>
+
+      <h4>Animated Terpene Profile</h4>
+      <p>Each terpene in the product is displayed with its emoji, name, a percentage bar that animates from zero to its concentration level on mount, and a one-line description ("Earthy and musky with herbal notes"). The bars use terpene-specific colors (green for Myrcene, red for Caryophyllene, gold for Limonene, purple for Linalool, pink for Terpinolene, cyan for Ocimene, teal for Pinene) for quick visual identification. This section answers the most important question in cannabis retail: "What will this product actually feel like?"</p>
+
+      <h4>Effects Tags</h4>
+      <p>Rounded green pills showing each effect ("Energetic," "Creative," "Happy"). These are scannable at a glance and map directly to the Effect browse mode &mdash; a customer could see "Creative" here, switch to Effect mode, and explore all Creative products.</p>
+
+      <h4>Similar Products Discovery</h4>
+      <p>Below the add-to-cart button, a "Similar Products" horizontal scroll row shows 4 products scored by category match, strain type overlap, shared effects, and shared terpenes. Each thumbnail is clickable and navigates within the same slide-over panel. This creates a discovery loop: view product, see similar, view similar product, see its similar products.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/product-similar.png" alt="Similar products section">
+        <div class="caption">Similar products discovery — creating a browsing loop within the detail panel</div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Most dispensary product pages show a text description, THC percentage, and a price. The terpene profile, strain spectrum, and effects visualization give customers the information they actually need to make an informed purchase decision. The animated terpene bars in particular transform an abstract data point (0.48% Myrcene) into a visual comparison that any customer can understand.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 7 — Smart Cart & Upsell                             -->
+    <!-- ============================================================ -->
+    <section class="section" id="s7">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <h3>Smart Cart &amp; Upsell</h3>
+      </div>
+
+      <div class="thesis">
+        The cart is not just a checkout queue &mdash; it's the final personalization touchpoint, suggesting complementary products and showing progress toward free delivery and loyalty rewards.
+      </div>
+
+      <!-- Cart Intelligence Flow Diagram -->
+      <div class="flow-diagram">
+        <div class="flow-title">Cart Intelligence Flow</div>
+        <div class="flow-v">
+          <div class="flow-box green" style="min-width: 200px;">Cart Items<small>Current selections</small></div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-h" style="gap: 12px;">
+            <div class="flow-box cream">Category Analysis<small>What's missing?</small></div>
+            <div class="flow-box cream">Terpene Matching<small>Shared profiles</small></div>
+          </div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-box gold" style="min-width: 260px;">Upsell Suggestions<small>"Complete Your Kit" — up to 3 complementary products</small></div>
+        </div>
+      </div>
+
+      <p>The cart is a right-side slide-over drawer matching the product detail panel's interaction pattern. It contains three distinct layers beyond the item list:</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/cart-upsell.png" alt="Cart with upsell suggestions">
+        <div class="caption">Smart cart with "Complete Your Kit" cross-category suggestions, delivery threshold, and loyalty points preview</div>
+      </div>
+
+      <h4>"Complete Your Kit" Cross-Category Suggestions</h4>
+      <p>Below the cart items, up to 3 upsell suggestions appear. The upsell logic works on two axes:</p>
+      <ol>
+        <li><strong>Complementary categories</strong> &mdash; Flower in cart suggests edibles ("Pairs well with flower") or pre-rolls ("For on-the-go"). Edibles suggest vapes ("While you wait for onset"). Vapes suggest edibles ("Extend the session"). This mirrors how experienced cannabis consumers actually combine products.</li>
+        <li><strong>Shared terpenes, different category</strong> &mdash; If your cart has high-myrcene flower, the system suggests a high-myrcene edible ("Same terpenes, different vibe"). This leverages the terpene profile data in a way that feels genuinely helpful rather than randomly promotional.</li>
+      </ol>
+      <p>Suggestions only show products rated 4.5+ and exclude anything already in the cart. Each suggestion card shows the product image, name, price, the reason for the suggestion, and a one-tap add button.</p>
+
+      <h4>Free Delivery Threshold Progress</h4>
+      <p>Below the upsells, a progress bar shows how close the cart total is to the $75 free delivery threshold. The remaining dollar amount is displayed ("$12 away"). Once the threshold is hit, a green "Free delivery unlocked!" badge replaces the progress bar. This is a proven conversion driver in cannabis e-commerce where delivery fees are a common cart abandonment cause.</p>
+
+      <h4>Loyalty Points Earned Preview</h4>
+      <p>Next to the cart total, a gold star icon shows how many loyalty points this order will earn ("+85 pts with this order"). This preview connects the current purchase to the long-term loyalty loop &mdash; the customer sees the reward before they commit.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Cannabis cart sizes average 2-3 items. The terpene-aware cross-sell ("same terpenes, different category") is unique to this prototype and reflects how cannabis actually works &mdash; a customer who likes myrcene-heavy flower will probably enjoy a myrcene-heavy edible. This is a meaningful recommendation, not a random "customers also bought" widget.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 8 — Loyalty & Gamification                          -->
+    <!-- ============================================================ -->
+    <section class="section" id="s8">
+      <div class="section-header">
+        <div class="section-num">08</div>
+        <h3>Loyalty &amp; Gamification</h3>
+      </div>
+
+      <div class="thesis">
+        Visible progress drives repeat visits. The loyalty tier system is not hidden in an account page &mdash; it's always present in the header and queryable through the AI.
+      </div>
+
+      <p>The loyalty system has four tiers:</p>
+
+      <table class="spec-table">
+        <tr><th>Tier</th><th>Points Range</th><th>Perks</th></tr>
+        <tr><td>Bronze</td><td>0 &ndash; 249</td><td>1x points</td></tr>
+        <tr><td>Silver</td><td>250 &ndash; 499</td><td>1.5x points</td></tr>
+        <tr><td>Gold</td><td>500 &ndash; 999</td><td>2x points + free delivery</td></tr>
+        <tr><td>Platinum</td><td>1,000+</td><td>3x points + priority + 10% off</td></tr>
+      </table>
+
+      <div class="mockup-frame">
+        <img src="mockups/header-loyalty.png" alt="Header close-up with loyalty progress bar">
+        <div class="caption">Header loyalty widget — tier name, point count, and progress bar always visible in the brand bar</div>
+      </div>
+
+      <h4>Header Progress Bar</h4>
+      <p>In the brand bar (dark green), a compact loyalty widget shows: current tier name, point count, a thin progress bar toward the next tier, and "X to [next tier]" text. Clicking this widget triggers a full loyalty shelf via the AI query system. The progress bar uses a gold gradient that matches the brand accent color.</p>
+
+      <h4>Loyalty Shelf</h4>
+      <p>Asking "show my rewards" or "loyalty points" generates a dedicated shelf showing: tier badge, total points, redeemable dollar value (points/100 * $5), progress bar to next tier with perks preview, and a companion shelf of "Earn 2x Points" products (currently edibles). This connects the loyalty status directly to actionable shopping.</p>
+
+      <h4>Point Multiplier Promotions</h4>
+      <p>The prototype includes a "2x points on all edibles today" promotion visible in the announcement bar, promo banner, and loyalty shelf. The system notes which categories have active multipliers and annotates relevant product cards ("2x points today"). This creates urgency around loyalty acceleration.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Cannabis dispensaries with loyalty programs see 30-40% higher visit frequency. But loyalty only works if customers are aware of their progress. Putting the tier progress bar in the header &mdash; visible on every page &mdash; and making it queryable through the AI ("how close am I to Gold?") means the loyalty loop is always active, not buried in an account settings page.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 9 — Brand & Visual Identity                         -->
+    <!-- ============================================================ -->
+    <section class="section" id="s9">
+      <div class="section-header">
+        <div class="section-num">09</div>
+        <h3>Brand &amp; Visual Identity</h3>
+      </div>
+
+      <div class="thesis">
+        The three-tier header creates vertical rhythm and information hierarchy. "Green Valley" is a white-label dispensary template that any operator could reskin.
+      </div>
+
+      <h4>Three-Tier Header</h4>
+      <ol>
+        <li><strong>Announcement Bar</strong> (gold background) &mdash; Promotional messaging. "Free delivery on orders over $75. Loyalty members earn 2x points today." Small, scannable, dismissible on promo banners.</li>
+        <li><strong>Brand Bar</strong> (dark green) &mdash; Store identity layer. Centered store name ("Green Valley &mdash; Premium Cannabis Dispensary"), location badge (Portland, OR), loyalty widget, user name. This is the operator's brand canvas.</li>
+        <li><strong>Navigation Bar</strong> (white, sticky) &mdash; Functional layer. Browse mode switcher, category/effect/terpene tabs, Concierge toggle, store status (Open/Closed), pickup/delivery indicator, cart button. Sticks on scroll; the search bar slides in when the hero scrolls out of view.</li>
+      </ol>
+
+      <div class="mockup-frame">
+        <img src="mockups/header-loyalty.png" alt="Three-tier header with brand identity">
+        <div class="caption">Three-tier header: announcement bar (gold), brand bar (dark green with loyalty), navigation bar (white, sticky)</div>
+      </div>
+
+      <h4>Color System</h4>
+      <div class="tag-row">
+        <span class="tag" style="background:#1a2e1a;color:#fff;border-color:#1a2e1a;">Primary #1a2e1a</span>
+        <span class="tag gold">Accent #d4a843</span>
+        <span class="tag" style="background:#fafafa;color:#555;">Background #fafafa</span>
+        <span class="tag" style="background:#fff;color:#555;border-color:#e0e0e0;">Surface #ffffff</span>
+        <span class="tag" style="background:#f0f4f0;color:#1a2e1a;">Green Tint #f0f4f0</span>
+      </div>
+      <p>The dark green primary is intentionally muted &mdash; not bright cannabis green, but a sophisticated forest tone. The gold accent is warm, not yellow, evoking premium quality. The overall palette positions cannabis retail as premium, approachable, and professional.</p>
+
+      <h4>Footer</h4>
+      <p>Dark green background matching the brand bar. Three columns: store identity and address with live "Open Now" indicator, shop links (all six categories as clickable navigation), and store hours. A bottom bar shows copyright and "Powered by dutchie &middot; AI Concierge" branding. The footer links are functional &mdash; clicking a category navigates to that category shelf.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/footer.png" alt="Rich footer with three columns">
+        <div class="caption">Footer — store identity, category navigation links, hours, and Dutchie branding</div>
+      </div>
+
+      <h4>White-Label Template</h4>
+      <p>"Green Valley" is a fictional dispensary. The design is built as a template where the store name, address, hours, color scheme, and logo area are all swappable. The three-tier header, color token system, and component architecture are designed for multi-tenant deployment where each dispensary gets their own branded instance.</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 10 — Home Screen Composition                        -->
+    <!-- ============================================================ -->
+    <section class="section" id="s10">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <h3>Home Screen Composition</h3>
+      </div>
+
+      <div class="thesis">
+        The home screen prioritizes intent capture and personalization over catalog density. Every element is designed to reduce the shopper's first question from "where do I start?" to "tap here."
+      </div>
+
+      <div class="mockup-frame">
+        <img src="mockups/home.png" alt="Full home page composition">
+        <div class="caption">Complete home screen — hero search, category tiles, intent pills, personalized shelves, and deals</div>
+      </div>
+
+      <p>The home screen assembles five distinct zones below the hero search bar:</p>
+
+      <h4>1. Promo Banner</h4>
+      <p>A subtle card with gold accent highlighting the active promotion ("2x points on all edibles today &mdash; Stack points faster toward Gold tier"). Includes a "Shop Edibles" CTA button and a dismiss X. This is the highest-intent conversion element on the page.</p>
+
+      <h4>2. Category Card Tiles</h4>
+      <p>Six rounded square tiles (Flower, Pre-Rolls, Vaporizers, Edibles, Topicals, Tinctures) in a horizontal scroll row. Each tile uses a custom SVG illustration rather than a stock photo. Hover state adds a green border and subtle shadow. These are the fastest path to a category for shoppers who know what product type they want.</p>
+
+      <h4>3. Quick Intent Pills</h4>
+      <p>Four horizontal pill buttons with emoji prefixes: "Relaxing tonight?" "Need focus?" "Pain relief" "Social vibes". Each pill triggers a full AI query that reshapes the page. These are not category filters &mdash; they are <strong>need-state entry points</strong>. A customer who doesn't think in product categories ("I don't know if I want flower or an edible, I just want to relax") can express their intent directly.</p>
+
+      <h4>4. "Picked For You" Shelf</h4>
+      <p>The first product shelf shows 4 AI-recommended products the customer hasn't tried yet, each with a match score and reason chip. The subtitle reads "Based on your hybrid preference and order history." This is the personalization engine's primary surface.</p>
+
+      <h4>5. "Buy Again" and "Today's Deals" Shelves</h4>
+      <p>Below the recommendations: a reorder shelf of previously purchased products ("Ordered before" chip) and a deals shelf showing sale items with percentage-off badges and urgency text.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/deals-reorder.png" alt="Deals and reorder shelves">
+        <div class="caption">Deals + reorder shelves — sale badges with urgency text, and previously purchased products</div>
+      </div>
+
+      <h4>Deliberate Omissions</h4>
+      <p>The home screen intentionally does <strong>not</strong> include a brand spotlight row or staff picks section in the default layout. Early iterations included these (and they exist as fully implemented components in the codebase), but they added clutter without serving a clear intent. The decision was to maintain focus on what matters most: personalized recommendations, quick intent capture, and deals. Fewer, better-matched products convert better than showing the full catalog with no guidance.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Most dispensary home pages show 40+ products in a grid with no hierarchy. The SmartShelf home shows approximately 12 products, all personalized, with three alternative entry paths (categories, intents, search). This is a deliberate bet that showing fewer, better-matched products converts higher than showing the full catalog with no guidance.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 11 — AI Query System                                -->
+    <!-- ============================================================ -->
+    <section class="section" id="s11">
+      <div class="section-header">
+        <div class="section-num">11</div>
+        <h3>AI Query System</h3>
+      </div>
+
+      <div class="thesis">
+        Natural language queries produce typed shelf responses. The system pattern-matches common intents locally for instant response, and falls back to Gemini for open-ended questions.
+      </div>
+
+      <!-- AI Query Pipeline Diagram -->
+      <div class="flow-diagram">
+        <div class="flow-title">AI Query Pipeline</div>
+        <div class="flow-v">
+          <div class="flow-box green" style="min-width: 220px;">User Input<small>"What's good for sleep?"</small></div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-box gold" style="min-width: 220px;">Intent Detection<small>Pattern match vs. open-ended</small></div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-h" style="gap: 16px;">
+            <div class="flow-v">
+              <div class="flow-box sage" style="min-width: 150px;">Shelf Builder<small>Local, instant</small></div>
+              <div class="flow-label">80% of queries</div>
+            </div>
+            <div class="flow-v">
+              <div class="flow-box cream" style="min-width: 150px;">Gemini API<small>LLM fallback</small></div>
+              <div class="flow-label">20% of queries</div>
+            </div>
+          </div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-box white-b" style="min-width: 220px;">Typed Shelf Response<small>Products, deals, bundles, comparison...</small></div>
+          <div class="flow-arrow-d"><div class="line"></div><div class="head"></div></div>
+          <div class="flow-box green" style="min-width: 220px;">Page Reshape<small>Store surface updates with animation</small></div>
+        </div>
+      </div>
+
+      <p>The query system is a two-tier architecture:</p>
+
+      <h4>Tier 1: Local Pattern Matching (Instant)</h4>
+      <p>Common queries are handled entirely client-side with no AI model call. The system checks the input string against known patterns and constructs shelf responses directly from the product catalog and user profile. This produces instant results (with a brief artificial delay for perceived processing) for the most common shopping intents:</p>
+
+      <div class="mockup-grid">
+        <div class="mockup-frame">
+          <img src="mockups/query-sleep.png" alt="Query: What's good for sleep?">
+          <div class="caption">Natural language query entry — intent pills and free-text input</div>
+        </div>
+        <div class="mockup-frame">
+          <img src="mockups/query-sleep-results.png" alt="Sleep query results as shelves">
+          <div class="caption">Query results rendered as annotated product shelves, not chat bubbles</div>
+        </div>
+      </div>
+
+      <table class="spec-table">
+        <tr><th>Query Pattern</th><th>Shelf Type</th><th>Response</th></tr>
+        <tr><td>"reorder my favorites"</td><td>Reorder</td><td>Products from purchase history, sorted by frequency</td></tr>
+        <tr><td>"something new for me"</td><td>Recommended</td><td>Untried products scored against taste profile</td></tr>
+        <tr><td>"today's deals"</td><td>Deals</td><td>Sale items with urgency messaging</td></tr>
+        <tr><td>"deals on my favorites"</td><td>Deals</td><td>Sale items filtered to purchased brands/categories</td></tr>
+        <tr><td>"my taste profile"</td><td>Profile + Recommended</td><td>Taste profile card + profile-matched products</td></tr>
+        <tr><td>"loyalty points"</td><td>Loyalty + Products</td><td>Rewards status + 2x point category products</td></tr>
+        <tr><td>"build me a weekend kit"</td><td>Bundle</td><td>Personalized 3-product bundle with timeline</td></tr>
+        <tr><td>"evening wind down"</td><td>Bundle</td><td>Indica flower + gummies bundle with session arc</td></tr>
+        <tr><td>"what's good for sleep"</td><td>Products</td><td>Sleep-friendly products with terpene annotation</td></tr>
+        <tr><td>"show me flower"</td><td>Products</td><td>Category filter with personalized sort</td></tr>
+        <tr><td>"compare top flower"</td><td>Comparison</td><td>Side-by-side table (price, THC, type, rating, effects)</td></tr>
+      </table>
+
+      <h4>Tier 2: Gemini Fallback (AI-Generated)</h4>
+      <p>Queries that don't match any local pattern are sent to Gemini with a system prompt that includes the full product catalog and user profile. The AI response text becomes an "ai-text" shelf (green card with sparkle icon). An enrichment layer then scans the AI text and user query to extract actionable shelf types &mdash; product recommendations, deals, comparisons, bundles &mdash; and renders them as interactive shelves below the text.</p>
+
+      <h4>Shelf Type Inventory</h4>
+      <div class="tag-row">
+        <span class="tag">products</span>
+        <span class="tag">deals</span>
+        <span class="tag">bundle</span>
+        <span class="tag">comparison</span>
+        <span class="tag">recommended</span>
+        <span class="tag">reorder</span>
+        <span class="tag">profile</span>
+        <span class="tag">loyalty</span>
+        <span class="tag gold">ai-text</span>
+        <span class="tag gold">effect-explorer</span>
+        <span class="tag gold">terpene-explorer</span>
+      </div>
+
+      <p>Each shelf type has its own renderer component with specialized UI: bundles have a timeline visualization, comparisons have a table layout, deals have urgency badges, recommended products have match scores, and explorer shelves have interactive card grids.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>The two-tier architecture means the 80% of queries that are common shopping intents get instant, deterministic responses &mdash; no latency, no hallucination risk. The remaining 20% (education questions, complex multi-factor requests) get the full power of an LLM. This is the right tradeoff for e-commerce: speed and reliability for buying, depth and flexibility for exploring.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 12 — The Concierge Mode                             -->
+    <!-- ============================================================ -->
+    <section class="section" id="s12">
+      <div class="section-header">
+        <div class="section-num">12</div>
+        <h3>The Concierge Mode</h3>
+      </div>
+
+      <div class="thesis">
+        The Concierge is a full-screen conversational agent that is better than Smart Shelf for complex multi-turn questions, "build me a kit" requests, and cannabis education. It complements the shopping surface rather than replacing it.
+      </div>
+
+      <p>The Concierge ("AgentStore") is a fundamentally different interaction paradigm. The UI is dark-themed and immersive. There is no product grid, no category navigation, no filter sidebar. The customer types or taps suggested prompts, and the AI responds with rich message cards that embed products, comparisons, bundles, and educational content directly in the conversation thread.</p>
+
+      <div class="mockup-frame">
+        <img src="mockups/concierge.png" alt="Full-screen Concierge mode">
+        <div class="caption">Full-screen Concierge mode — dark immersive UI with rich product cards embedded in conversation</div>
+      </div>
+
+      <h4>When Concierge is Better</h4>
+      <ul>
+        <li><strong>Multi-turn exploration</strong> &mdash; "I want something relaxing but I also need to be functional. Not too strong. What about edibles vs. flower for this?" This requires back-and-forth that a single-query shelf can't support.</li>
+        <li><strong>"Build me a kit"</strong> &mdash; Weekend bundles, evening routines, and multi-product session planning work better in conversation where the AI can explain the arc ("start with flower at 7 PM, gummies at 9 PM, pre-roll at 11 PM").</li>
+        <li><strong>Education</strong> &mdash; "What's the difference between indica and sativa?" "How do terpenes work?" "What's a good starting dose for edibles?" These are information-seeking, not shopping, and a conversational format is natural.</li>
+        <li><strong>Complex comparisons</strong> &mdash; "Compare these three vapes on flavor, potency, and value." The Concierge renders this as an inline comparison table within the conversation.</li>
+      </ul>
+
+      <h4>Rich Message Types</h4>
+      <p>Assistant messages in Concierge can contain:</p>
+      <ul>
+        <li><strong>Product cards</strong> with image, price, rating, and add-to-cart &mdash; inline in the message</li>
+        <li><strong>Comparison tables</strong> for side-by-side product evaluation</li>
+        <li><strong>Bundle cards</strong> with session timeline, original vs. bundle price, and "Add All" button</li>
+        <li><strong>Reorder cards</strong> with purchase history context and order count</li>
+        <li><strong>Deal cards</strong> with discount percentages and urgency messaging</li>
+        <li><strong>Taste profile visualizations</strong> with effect spectrum bars</li>
+        <li><strong>Loyalty status cards</strong> with tier progress and redeemable value</li>
+        <li><strong>Recommended product grids</strong> with match scores and reasoning</li>
+        <li><strong>Follow-up chips</strong> &mdash; contextual next-action suggestions that change based on the previous query</li>
+        <li><strong>"Next Actions" cards</strong> &mdash; gradient-styled buttons suggesting where to go next ("Something new," "Deals," "Weekend kit")</li>
+      </ul>
+
+      <h4>Conversation Context</h4>
+      <p>Messages include personal insights ("You've spent $1,847 over 23 orders"), follow-up annotations ("Based on your 23 orders, these are your regulars"), and suggested chips that adapt to the conversation state. After a reorder query, chips suggest "Something new" and "Weekend kit." After a deals query, chips suggest "Reorder go-tos" and "My rewards." This adaptive chip behavior creates a guided shopping flow within the conversation.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>The Concierge mode proves that conversational commerce works for cannabis when the UI is rich enough. The key insight: product cards, not text descriptions, must be the atomic unit of the conversation. Customers don't want to read about products &mdash; they want to see, evaluate, and add-to-cart inline. The Concierge achieves this while keeping the full depth of multi-turn conversation.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 13 — Product Catalog Design                         -->
+    <!-- ============================================================ -->
+    <section class="section" id="s13">
+      <div class="section-header">
+        <div class="section-num">13</div>
+        <h3>Product Catalog Design</h3>
+      </div>
+
+      <div class="thesis">
+        41 curated products across 6 active categories. Every product has a complete terpene profile, effects array, strain type, and professional imagery. Quality over quantity &mdash; we removed products rather than use stock photos.
+      </div>
+
+      <h4>Catalog Composition</h4>
+      <table class="spec-table">
+        <tr><th>Category</th><th>Count</th><th>Example Brands</th></tr>
+        <tr><td>Flower</td><td>13</td><td>Select, Cookies, Connected, Alien Labs, Fig Farms, Seed Junky</td></tr>
+        <tr><td>Edibles</td><td>9</td><td>WYLD, Kiva/Camino, Wana, Plus, Korova, Breez</td></tr>
+        <tr><td>Vapes</td><td>10</td><td>PAX, Stiiizy, Raw Garden, Heavy Hitters, Dosist, Select, Jeeter</td></tr>
+        <tr><td>Pre-Rolls</td><td>5</td><td>Jeeter, Lowell Herb Co</td></tr>
+        <tr><td>Topicals</td><td>2</td><td>Papa &amp; Barkley, Mary's Medicinals</td></tr>
+        <tr><td>Tinctures</td><td>1</td><td>Papa &amp; Barkley</td></tr>
+      </table>
+
+      <h4>Product Data Model</h4>
+      <p>Every product includes:</p>
+      <ul>
+        <li><strong>Core attributes</strong> &mdash; name, brand, category, price, weight, THC percentage, optional CBD ratio</li>
+        <li><strong>Effects array</strong> &mdash; 2-3 tagged effects per product (Relaxed, Happy, Creative, Sleepy, Calm, Energetic, Uplifted, Focused, Pain Relief)</li>
+        <li><strong>Terpene profiles</strong> &mdash; 2-3 terpenes per product, each with name, emoji, description, and <strong>percentage concentration</strong>. This is the key data layer that enables terpene browsing and terpene-aware recommendations.</li>
+        <li><strong>Strain type</strong> &mdash; indica, sativa, hybrid, or CBD</li>
+        <li><strong>Brand metadata</strong> &mdash; brand name, brand color (hex), brand initials. The brand color is used for the product detail hero gradient and brand avatar badges.</li>
+        <li><strong>Rating and review count</strong> &mdash; simulated review data for social proof</li>
+        <li><strong>Sale data</strong> &mdash; optional onSale flag and originalPrice for deal display</li>
+        <li><strong>Professional image</strong> &mdash; high-quality product photograph (webp/jpg/png)</li>
+      </ul>
+
+      <div class="tech-block">
+        <div class="label">Product Data Schema</div>
+        { id, name, brand, brandColor, category, price, weight,<br>
+        &nbsp;&nbsp;thc, cbd?, strainType, effects[], terpenes[],<br>
+        &nbsp;&nbsp;rating, reviewCount, image, onSale?, originalPrice?,<br>
+        &nbsp;&nbsp;description }
+      </div>
+
+      <h4>Image Quality Decision</h4>
+      <p>The prototype originally included concentrate products and additional brands. These were <strong>removed from the catalog</strong> because professional product images were not available for them. The comment in the product data file ("Concentrates removed &mdash; no professional images available") documents this deliberate choice.</p>
+
+      <p>This was a product quality decision, not a technical limitation. A dispensary shopping experience with inconsistent image quality &mdash; some products with professional shots, others with placeholder emojis &mdash; degrades the entire catalog's perceived quality. We chose to reduce the catalog size rather than compromise visual consistency. Products without images fall back to emoji icons, but this is treated as a failure mode, not a design pattern.</p>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>Cannabis products cannot be evaluated by smell or touch in a digital context. The product image is the primary decision-making input for online shoppers. Pairing high-quality images with rich terpene data creates a product detail experience that actually helps customers choose &mdash; unlike the text-heavy, image-poor product pages that are standard in dispensary e-commerce today.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!--  Section 14 — What's Next                                    -->
+    <!-- ============================================================ -->
+    <section class="section" id="s14">
+      <div class="section-header">
+        <div class="section-num">14</div>
+        <h3>What's Next &mdash; Production Considerations</h3>
+      </div>
+
+      <div class="thesis">
+        The prototype proves the interaction model and UX thesis. Production needs to preserve the shelf-based AI response pattern, terpene-first browsing, visual product annotation, and the two-mode architecture &mdash; while rebuilding everything else.
+      </div>
+
+      <h4>What the Prototype Proves</h4>
+      <ul>
+        <li><strong>The shelf-based AI response model works.</strong> Customers can query in natural language and receive product-rich, visually browsable results without a chat UI paradigm.</li>
+        <li><strong>Terpene-first browsing is viable and valuable.</strong> It provides a navigation model that actually predicts the customer's experience.</li>
+        <li><strong>Two modes complement each other.</strong> Smart Shelf for browse-heavy tasks, Concierge for conversation-heavy tasks, shared cart state across both.</li>
+        <li><strong>AI annotations on product cards add genuine value.</strong> Match scores, reason chips, and contextual "why this matches you" text help customers make faster, more confident decisions.</li>
+        <li><strong>Bundle and timeline UX resonates.</strong> The "weekend kit" timeline (7 PM flower, 9 PM edibles, 11 PM pre-roll) turns a cross-sell into a narrative.</li>
+      </ul>
+
+      <h4>What Production Needs to Build</h4>
+
+      <table class="spec-table">
+        <tr><th>Area</th><th>Prototype State</th><th>Production Need</th></tr>
+        <tr><td>Authentication</td><td>Hardcoded user profile</td><td>Real auth (OAuth/SSO), customer account system, profile built from actual purchase history</td></tr>
+        <tr><td>Inventory</td><td>Static product array</td><td>Real-time inventory integration, stock levels, menu sync with POS</td></tr>
+        <tr><td>AI Model</td><td>Gemini via client-side API call</td><td>Server-side AI with fine-tuned model, guardrails, compliance review, response caching</td></tr>
+        <tr><td>Personalization</td><td>Client-side scoring algorithm</td><td>Server-side ML pipeline, A/B testing framework, collaborative filtering at scale</td></tr>
+        <tr><td>Accessibility</td><td>Minimal ARIA, no keyboard nav audit</td><td>Full WCAG 2.1 AA compliance, screen reader support, keyboard navigation</td></tr>
+        <tr><td>Mobile</td><td>Responsive breakpoints but desktop-first</td><td>Mobile-first rebuild, touch gestures, bottom sheet patterns, native-feel transitions</td></tr>
+        <tr><td>Performance</td><td>~40 products, all loaded at once</td><td>Pagination, virtual scrolling, image CDN, lazy loading, search index</td></tr>
+        <tr><td>Checkout</td><td>Cart UI only, no actual checkout</td><td>Full checkout flow, payment integration, delivery/pickup scheduling</td></tr>
+        <tr><td>Compliance</td><td>None</td><td>Age verification, state-specific regulations, product claim restrictions</td></tr>
+        <tr><td>Analytics</td><td>None</td><td>Event tracking (queries, shelf interactions, add-to-cart, conversion funnel)</td></tr>
+      </table>
+
+      <h4>What to Preserve</h4>
+      <p>The following design decisions should survive the production rebuild:</p>
+      <ol>
+        <li><strong>The shelf-based AI response pattern.</strong> The AI response is always a page reshape, never a chat bubble. Products are always visible.</li>
+        <li><strong>Terpene-first browsing as a first-class navigation mode.</strong> Not a filter &mdash; a full browse paradigm with its own explorer view, sorting logic, and educational content.</li>
+        <li><strong>Visual product annotation.</strong> Match scores, reason chips, AI note badges. Every product card can carry context about why it's being shown.</li>
+        <li><strong>The two-mode architecture.</strong> Smart Shelf for browsing with AI assistance, Concierge for conversation-first shopping. Shared cart state.</li>
+        <li><strong>The three-tier header hierarchy.</strong> Announcement bar, brand bar, sticky nav. This creates clear information architecture and the right level of visual density.</li>
+        <li><strong>Bundle timeline visualization.</strong> The session arc ("7 PM &rarr; 9 PM &rarr; 11 PM") is a powerful narrative device for cross-sell bundles.</li>
+        <li><strong>Animated terpene profile bars.</strong> The animated percentage bars in product detail transform abstract data into comprehensible visuals.</li>
+        <li><strong>Strain spectrum visualization.</strong> The indica-hybrid-sativa gradient bar with positioned indicator is more informative than a text label.</li>
+        <li><strong>The local-first query architecture.</strong> Common shopping intents should always be instant. LLM fallback is for the long tail.</li>
+        <li><strong>The "Complete Your Kit" upsell logic.</strong> Complementary category + shared terpene scoring is cannabis-specific and genuinely helpful.</li>
+      </ol>
+
+      <div class="callout">
+        <div class="callout-label">Why This Matters</div>
+        <p>The biggest risk in a prototype-to-production handoff is losing the design intent. This prototype is not a technical demo &mdash; it is a thesis about how AI should integrate with e-commerce. The thesis is: the AI reshapes the store, not the conversation. Production should optimize, scale, and harden the infrastructure, but the interaction model should be treated as proven and preserved.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <p style="text-align:center;color:var(--text-muted);font-size:13px;padding-bottom:16px;">
+      SmartShelf AI Concierge &mdash; Design Review &middot; Dutchie &middot; March 2026
+    </p>
+
+  </div>
+</div>
+
+</body>
+</html>

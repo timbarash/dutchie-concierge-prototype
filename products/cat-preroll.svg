@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Soft background circle -->
+  <circle cx="60" cy="60" r="52" fill="#EFEBE9"/>
+  <!-- Joint body - cone shape -->
+  <path d="M38 85 L52 30 L58 30 L72 85 Z" fill="#A1887F" rx="2"/>
+  <!-- Paper texture line -->
+  <path d="M44 70 L66 70" stroke="#8D6E63" stroke-width="0.8" opacity="0.5"/>
+  <path d="M46 60 L64 60" stroke="#8D6E63" stroke-width="0.8" opacity="0.5"/>
+  <path d="M48 50 L62 50" stroke="#8D6E63" stroke-width="0.8" opacity="0.5"/>
+  <!-- Twist tip -->
+  <path d="M52 30 Q55 20 55 16 Q55 20 58 30" fill="#A1887F"/>
+  <!-- Filter/crutch at bottom -->
+  <path d="M38 85 L72 85 L70 92 L40 92 Z" fill="#8D6E63" rx="1"/>
+  <path d="M42 87 L42 91" stroke="#A1887F" stroke-width="1" opacity="0.6"/>
+  <path d="M47 87 L47 91" stroke="#A1887F" stroke-width="1" opacity="0.6"/>
+  <path d="M52 87 L52 91" stroke="#A1887F" stroke-width="1" opacity="0.6"/>
+  <path d="M57 87 L57 91" stroke="#A1887F" stroke-width="1" opacity="0.6"/>
+  <path d="M62 87 L62 91" stroke="#A1887F" stroke-width="1" opacity="0.6"/>
+  <path d="M67 87 L67 91" stroke="#A1887F" stroke-width="1" opacity="0.6"/>
+  <!-- Smoke wisps -->
+  <path d="M55 16 Q52 10 54 4" stroke="#8D6E63" stroke-width="1.5" stroke-linecap="round" opacity="0.3" fill="none"/>
+  <path d="M55 16 Q58 8 56 2" stroke="#8D6E63" stroke-width="1" stroke-linecap="round" opacity="0.2" fill="none"/>
+</svg>

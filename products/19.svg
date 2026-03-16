@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg19" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5faf5"/>
+      <stop offset="100%" stop-color="#e5f0e5"/>
+    </radialGradient>
+    <linearGradient id="tin19" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#48A038"/>
+      <stop offset="50%" stop-color="#388830"/>
+      <stop offset="100%" stop-color="#2A7020"/>
+    </linearGradient>
+    <radialGradient id="gummy19" cx="45%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#90D060"/>
+      <stop offset="50%" stop-color="#70B840"/>
+      <stop offset="100%" stop-color="#58A030"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg19)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Plus tin - round tin container -->
+  <ellipse cx="100" cy="105" rx="55" ry="50" fill="url(#tin19)"/>
+  <!-- Lid top highlight -->
+  <ellipse cx="100" cy="98" rx="52" ry="46" fill="#50A840" opacity="0.6"/>
+  <ellipse cx="100" cy="94" rx="45" ry="40" fill="#58B048" opacity="0.4"/>
+  <!-- Lid rim -->
+  <ellipse cx="100" cy="105" rx="55" ry="50" fill="none" stroke="#2A7020" stroke-width="2"/>
+  <!-- Inner circle design -->
+  <ellipse cx="100" cy="98" rx="35" ry="30" fill="none" stroke="#70C850" stroke-width="1" opacity="0.5"/>
+  <!-- Citrus-themed gummies visible in center -->
+  <circle cx="88" cy="95" r="8" fill="url(#gummy19)"/>
+  <circle cx="105" cy="92" r="9" fill="#80C850" opacity="0.9"/>
+  <circle cx="112" cy="104" r="7" fill="url(#gummy19)" opacity="0.85"/>
+  <circle cx="95" cy="106" r="8" fill="#88D058" opacity="0.8"/>
+  <!-- Gummy shines -->
+  <circle cx="86" cy="92" r="2.5" fill="#fff" opacity="0.25"/>
+  <circle cx="103" cy="89" r="3" fill="#fff" opacity="0.2"/>
+  <circle cx="110" cy="101" r="2" fill="#fff" opacity="0.2"/>
+  <!-- Plus symbol embossed on lid -->
+  <rect x="96" y="72" width="8" height="20" rx="2" ry="2" fill="#60B848" opacity="0.5"/>
+  <rect x="90" y="78" width="20" height="8" rx="2" ry="2" fill="#60B848" opacity="0.5"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="165" rx="48" ry="6" fill="#000" opacity="0.07"/>
+</svg>

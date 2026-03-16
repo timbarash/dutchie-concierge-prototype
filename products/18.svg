@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg18" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fdfaf5"/>
+      <stop offset="100%" stop-color="#f0ebe0"/>
+    </radialGradient>
+    <radialGradient id="bud18a" cx="45%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#C8B848"/>
+      <stop offset="40%" stop-color="#A89838"/>
+      <stop offset="100%" stop-color="#7A7028"/>
+    </radialGradient>
+    <radialGradient id="bud18b" cx="55%" cy="42%" r="50%">
+      <stop offset="0%" stop-color="#8AAA48"/>
+      <stop offset="50%" stop-color="#6E8A35"/>
+      <stop offset="100%" stop-color="#4E6825"/>
+    </radialGradient>
+    <radialGradient id="bud18c" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#D4C458"/>
+      <stop offset="60%" stop-color="#B0A040"/>
+      <stop offset="100%" stop-color="#8A7A30"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg18)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Golden/yellow bud -->
+  <ellipse cx="100" cy="93" rx="43" ry="48" fill="url(#bud18a)"/>
+  <ellipse cx="87" cy="85" rx="30" ry="35" fill="url(#bud18b)" opacity="0.8"/>
+  <ellipse cx="115" cy="82" rx="27" ry="32" fill="url(#bud18c)" opacity="0.85"/>
+  <ellipse cx="97" cy="108" rx="26" ry="22" fill="url(#bud18a)" opacity="0.7"/>
+  <!-- Golden calyxes -->
+  <circle cx="80" cy="76" r="12" fill="#C8B848" opacity="0.6"/>
+  <circle cx="105" cy="70" r="14" fill="#8AAA48" opacity="0.5"/>
+  <circle cx="120" cy="88" r="11" fill="#D4C458" opacity="0.5"/>
+  <circle cx="92" cy="100" r="12" fill="#B0A040" opacity="0.5"/>
+  <!-- Cream/banana highlights -->
+  <circle cx="94" cy="82" r="8" fill="#E8D870" opacity="0.35"/>
+  <circle cx="112" cy="78" r="6" fill="#F0E080" opacity="0.3"/>
+  <circle cx="100" cy="96" r="7" fill="#E8D870" opacity="0.25"/>
+  <!-- Trichomes -->
+  <circle cx="90" cy="80" r="2" fill="#fff" opacity="0.65"/>
+  <circle cx="108" cy="74" r="1.5" fill="#fff" opacity="0.6"/>
+  <circle cx="118" cy="90" r="2" fill="#fff" opacity="0.55"/>
+  <circle cx="96" cy="102" r="1.5" fill="#fff" opacity="0.6"/>
+  <!-- Pistils -->
+  <path d="M86 74 Q80 68 76 64" stroke="#E0A040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M110 70 Q114 63 118 59" stroke="#D09038" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M122 92 Q128 88 132 84" stroke="#E0A040" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+  <!-- Leaf -->
+  <path d="M58 106 Q46 94 52 78 Q60 88 58 106Z" fill="#6E8A35" opacity="0.5"/>
+  <ellipse cx="100" cy="155" rx="36" ry="6" fill="#000" opacity="0.08"/>
+</svg>

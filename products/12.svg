@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg12" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fdf8f3"/>
+      <stop offset="100%" stop-color="#f5ebe0"/>
+    </radialGradient>
+    <linearGradient id="bag12" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E88830"/>
+      <stop offset="50%" stop-color="#D07020"/>
+      <stop offset="100%" stop-color="#B85818"/>
+    </linearGradient>
+    <radialGradient id="gummy12" cx="45%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#F0A840"/>
+      <stop offset="50%" stop-color="#E09030"/>
+      <stop offset="100%" stop-color="#C87020"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg12)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Orange/mango package -->
+  <path d="M45 55 L45 155 Q45 162 52 162 L148 162 Q155 162 155 155 L155 55 Q155 48 148 48 L52 48 Q45 48 45 55Z" fill="url(#bag12)" opacity="0.9"/>
+  <!-- Top seal -->
+  <rect x="45" y="48" width="110" height="12" rx="3" ry="3" fill="#C06018" opacity="0.8"/>
+  <!-- Tear line -->
+  <path d="M50 60 L55 57 L60 60 L65 57 L70 60 L75 57 L80 60 L85 57 L90 60 L95 57 L100 60 L105 57 L110 60 L115 57 L120 60 L125 57 L130 60 L135 57 L140 60 L145 57 L150 60" stroke="#E0A050" stroke-width="0.8" fill="none"/>
+  <!-- Window -->
+  <rect x="58" y="75" width="84" height="58" rx="8" ry="8" fill="#FFF5E8" opacity="0.85"/>
+  <!-- Mango-shaped gummies -->
+  <path d="M72 110 Q68 95 78 90 Q88 86 92 98 Q96 110 86 118 Q76 120 72 110Z" fill="url(#gummy12)"/>
+  <path d="M105 112 Q101 97 111 92 Q121 88 125 100 Q129 112 119 120 Q109 122 105 112Z" fill="#E89830" opacity="0.9"/>
+  <!-- Gummy shine -->
+  <circle cx="80" cy="98" r="4" fill="#fff" opacity="0.25"/>
+  <circle cx="113" cy="100" r="4" fill="#fff" opacity="0.2"/>
+  <!-- Sugar coating dots -->
+  <circle cx="76" cy="105" r="1" fill="#fff" opacity="0.4"/>
+  <circle cx="82" cy="100" r="0.8" fill="#fff" opacity="0.35"/>
+  <circle cx="85" cy="108" r="1" fill="#fff" opacity="0.3"/>
+  <circle cx="110" cy="107" r="1" fill="#fff" opacity="0.4"/>
+  <circle cx="116" cy="102" r="0.8" fill="#fff" opacity="0.35"/>
+  <circle cx="118" cy="110" r="1" fill="#fff" opacity="0.3"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="172" rx="50" ry="5" fill="#000" opacity="0.06"/>
+</svg>

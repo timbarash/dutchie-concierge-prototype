@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Soft background circle -->
+  <circle cx="60" cy="60" r="52" fill="#ECEFF1"/>
+  <!-- Pen body -->
+  <rect x="50" y="32" width="20" height="60" rx="4" fill="#546E7A"/>
+  <!-- Cartridge window -->
+  <rect x="53" y="40" width="14" height="20" rx="3" fill="#78909C"/>
+  <!-- Oil level in cartridge -->
+  <rect x="53" y="48" width="14" height="12" rx="0 0 3 3" fill="#546E7A" opacity="0.4"/>
+  <!-- Mouthpiece -->
+  <rect x="54" y="22" width="12" height="12" rx="6" fill="#78909C"/>
+  <!-- Button -->
+  <circle cx="60" cy="72" r="3.5" fill="#78909C"/>
+  <!-- Bottom cap -->
+  <rect x="52" y="90" width="16" height="5" rx="2.5" fill="#78909C"/>
+  <!-- Vapor cloud -->
+  <circle cx="56" cy="14" r="4" fill="#78909C" opacity="0.2"/>
+  <circle cx="62" cy="10" r="5" fill="#78909C" opacity="0.15"/>
+  <circle cx="66" cy="14" r="3.5" fill="#78909C" opacity="0.12"/>
+  <circle cx="58" cy="8" r="3" fill="#78909C" opacity="0.1"/>
+</svg>

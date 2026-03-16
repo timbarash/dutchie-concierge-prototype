@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg9" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5faf5"/>
+      <stop offset="100%" stop-color="#e5f0e5"/>
+    </radialGradient>
+    <linearGradient id="cart9" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#5AAA30"/>
+      <stop offset="30%" stop-color="#68C038"/>
+      <stop offset="70%" stop-color="#5AAA30"/>
+      <stop offset="100%" stop-color="#488A25"/>
+    </linearGradient>
+    <linearGradient id="glass9" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.15)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.15)"/>
+    </linearGradient>
+    <linearGradient id="oil9" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4B840"/>
+      <stop offset="100%" stop-color="#B89830"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg9)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Cart body - standard 510 cartridge -->
+  <rect x="88" y="45" width="24" height="95" rx="4" ry="4" fill="url(#cart9)"/>
+  <!-- Mouthpiece -->
+  <rect x="92" y="35" width="16" height="20" rx="5" ry="5" fill="#488A25"/>
+  <!-- Glass tank -->
+  <rect x="90" y="60" width="20" height="60" rx="3" ry="3" fill="#f8f8f0" opacity="0.9"/>
+  <rect x="90" y="60" width="20" height="60" rx="3" ry="3" fill="url(#oil9)" opacity="0.6"/>
+  <!-- Coil visible inside -->
+  <rect x="96" y="110" width="8" height="12" rx="2" ry="2" fill="#888" opacity="0.3"/>
+  <circle cx="100" cy="115" r="3" fill="#aaa" opacity="0.25"/>
+  <!-- 510 thread base -->
+  <rect x="90" y="138" width="20" height="14" rx="2" ry="2" fill="#C0C0C0"/>
+  <rect x="93" y="150" width="14" height="8" rx="2" ry="2" fill="#A0A0A0"/>
+  <!-- Thread lines -->
+  <line x1="90" y1="142" x2="110" y2="142" stroke="#aaa" stroke-width="0.5"/>
+  <line x1="90" y1="145" x2="110" y2="145" stroke="#aaa" stroke-width="0.5"/>
+  <line x1="90" y1="148" x2="110" y2="148" stroke="#aaa" stroke-width="0.5"/>
+  <!-- Shine -->
+  <rect x="91" y="62" width="4" height="55" rx="2" ry="2" fill="#fff" opacity="0.2"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="168" rx="18" ry="3" fill="#000" opacity="0.08"/>
+</svg>

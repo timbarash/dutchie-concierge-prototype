@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Soft background circle -->
+  <circle cx="60" cy="60" r="52" fill="#E8F5E9"/>
+  <!-- Main bud body -->
+  <ellipse cx="60" cy="55" rx="18" ry="24" fill="#4CAF50"/>
+  <!-- Bud texture bumps -->
+  <circle cx="52" cy="45" r="8" fill="#7CB342"/>
+  <circle cx="68" cy="43" r="7" fill="#7CB342"/>
+  <circle cx="58" cy="36" r="6" fill="#7CB342"/>
+  <circle cx="63" cy="50" r="7" fill="#7CB342"/>
+  <circle cx="55" cy="55" r="6" fill="#7CB342"/>
+  <!-- Bud top highlight -->
+  <ellipse cx="60" cy="38" rx="10" ry="6" fill="#7CB342" opacity="0.6"/>
+  <!-- Left leaf -->
+  <path d="M42 68 Q30 55 36 42 Q42 52 48 62 Z" fill="#4CAF50"/>
+  <path d="M42 68 Q30 55 36 42" stroke="#7CB342" stroke-width="1" fill="none"/>
+  <!-- Right leaf -->
+  <path d="M78 68 Q90 55 84 42 Q78 52 72 62 Z" fill="#4CAF50"/>
+  <path d="M78 68 Q90 55 84 42" stroke="#7CB342" stroke-width="1" fill="none"/>
+  <!-- Small stem -->
+  <rect x="58" y="76" width="4" height="12" rx="2" fill="#7CB342"/>
+</svg>

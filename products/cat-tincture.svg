@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Soft background circle -->
+  <circle cx="60" cy="60" r="52" fill="#EDE7F6"/>
+  <!-- Bottle body -->
+  <rect x="42" y="48" width="36" height="44" rx="6" fill="#9575CD"/>
+  <!-- Bottle neck -->
+  <rect x="52" y="36" width="16" height="14" rx="2" fill="#9575CD"/>
+  <!-- Bottle highlight -->
+  <rect x="47" y="54" width="6" height="30" rx="3" fill="white" opacity="0.15"/>
+  <!-- Dropper rubber bulb -->
+  <ellipse cx="60" cy="28" rx="10" ry="10" fill="#7E57C2"/>
+  <!-- Dropper bulb highlight -->
+  <ellipse cx="57" cy="25" rx="4" ry="5" fill="white" opacity="0.12"/>
+  <!-- Dropper stem (glass tube) -->
+  <rect x="58" y="36" width="4" height="18" rx="1" fill="#7E57C2" opacity="0.6"/>
+  <!-- Label area -->
+  <rect x="46" y="62" width="28" height="18" rx="3" fill="white" opacity="0.15"/>
+  <!-- Small leaf on label -->
+  <path d="M60 66 Q56 70 60 76 Q64 70 60 66 Z" fill="#7E57C2" opacity="0.4"/>
+  <!-- Droplet falling -->
+  <g transform="translate(60, 98)">
+    <path d="M0 0 Q-4 6 0 10 Q4 6 0 0 Z" fill="#9575CD" opacity="0.5"/>
+  </g>
+  <!-- Second smaller drop -->
+  <circle cx="60" cy="112" r="2" fill="#9575CD" opacity="0.25"/>
+</svg>

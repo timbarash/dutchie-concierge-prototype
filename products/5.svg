@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg5" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f3f8fa"/>
+      <stop offset="100%" stop-color="#e0eef5"/>
+    </radialGradient>
+    <linearGradient id="pod5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1A8A9A"/>
+      <stop offset="30%" stop-color="#20A0B0"/>
+      <stop offset="70%" stop-color="#1A8A9A"/>
+      <stop offset="100%" stop-color="#147080"/>
+    </linearGradient>
+    <linearGradient id="pod5top" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#28B0C0"/>
+      <stop offset="100%" stop-color="#1A8A9A"/>
+    </linearGradient>
+    <linearGradient id="oil5" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E8C850"/>
+      <stop offset="100%" stop-color="#C8A838"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg5)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Stiiizy pod - distinctive wider top, narrow bottom -->
+  <path d="M80 55 L80 140 Q80 150 90 150 L110 150 Q120 150 120 140 L120 55 Q120 45 110 45 L90 45 Q80 45 80 55Z" fill="url(#pod5)"/>
+  <!-- Flat mouthpiece top -->
+  <rect x="85" y="40" width="30" height="15" rx="4" ry="4" fill="url(#pod5top)"/>
+  <!-- Oil chamber -->
+  <rect x="86" y="68" width="28" height="55" rx="4" ry="4" fill="#0E6070" opacity="0.8"/>
+  <rect x="88" y="70" width="24" height="51" rx="3" ry="3" fill="url(#oil5)" opacity="0.65"/>
+  <!-- Air bubble -->
+  <ellipse cx="100" cy="78" rx="8" ry="4" fill="#0E6070" opacity="0.4"/>
+  <!-- Shine line -->
+  <rect x="83" y="52" width="5" height="85" rx="2.5" ry="2.5" fill="#fff" opacity="0.12"/>
+  <!-- Bottom connector -->
+  <rect x="92" y="148" width="16" height="6" rx="2" ry="2" fill="#aaa" opacity="0.5"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="166" rx="24" ry="4" fill="#000" opacity="0.08"/>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg4" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5f3f8"/>
+      <stop offset="100%" stop-color="#e8e4f0"/>
+    </radialGradient>
+    <linearGradient id="pod4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4A2868"/>
+      <stop offset="30%" stop-color="#5C3480"/>
+      <stop offset="70%" stop-color="#4A2868"/>
+      <stop offset="100%" stop-color="#381E52"/>
+    </linearGradient>
+    <linearGradient id="pod4top" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6A4090"/>
+      <stop offset="100%" stop-color="#4A2868"/>
+    </linearGradient>
+    <linearGradient id="oil4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#D4A840"/>
+      <stop offset="100%" stop-color="#B08830"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg4)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- PAX Era pod body - sleek rectangle -->
+  <rect x="78" y="42" width="44" height="116" rx="8" ry="8" fill="url(#pod4)"/>
+  <!-- Top mouthpiece -->
+  <rect x="82" y="38" width="36" height="20" rx="6" ry="6" fill="url(#pod4top)"/>
+  <!-- Oil window -->
+  <rect x="86" y="72" width="28" height="50" rx="4" ry="4" fill="#2A1840" opacity="0.8"/>
+  <rect x="88" y="74" width="24" height="46" rx="3" ry="3" fill="url(#oil4)" opacity="0.7"/>
+  <!-- Oil level line -->
+  <rect x="88" y="74" width="24" height="12" rx="3" ry="0" fill="#2A1840" opacity="0.3"/>
+  <!-- Subtle shine -->
+  <rect x="82" y="50" width="6" height="90" rx="3" ry="3" fill="#fff" opacity="0.1"/>
+  <!-- Metal contacts at bottom -->
+  <circle cx="92" cy="152" r="3" fill="#888" opacity="0.6"/>
+  <circle cx="108" cy="152" r="3" fill="#888" opacity="0.6"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="168" rx="25" ry="4" fill="#000" opacity="0.08"/>
+</svg>

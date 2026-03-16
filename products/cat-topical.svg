@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <!-- Soft background circle -->
+  <circle cx="60" cy="60" r="52" fill="#E0F2F1"/>
+  <!-- Jar body -->
+  <rect x="32" y="50" width="56" height="38" rx="8" fill="#4DB6AC"/>
+  <!-- Jar lid -->
+  <rect x="28" y="42" width="64" height="12" rx="4" fill="#80CBC4"/>
+  <!-- Jar highlight -->
+  <rect x="38" y="56" width="8" height="24" rx="4" fill="white" opacity="0.15"/>
+  <!-- Cream swirl on top of jar -->
+  <ellipse cx="60" cy="42" rx="20" ry="3" fill="#80CBC4"/>
+  <!-- Leaf accent on jar -->
+  <g transform="translate(52, 64)">
+    <!-- Leaf shape -->
+    <path d="M8 18 Q0 10 8 0 Q16 10 8 18 Z" fill="#80CBC4"/>
+    <!-- Leaf vein -->
+    <line x1="8" y1="2" x2="8" y2="16" stroke="#4DB6AC" stroke-width="0.8"/>
+    <line x1="8" y1="6" x2="4" y2="9" stroke="#4DB6AC" stroke-width="0.6"/>
+    <line x1="8" y1="6" x2="12" y2="9" stroke="#4DB6AC" stroke-width="0.6"/>
+    <line x1="8" y1="10" x2="5" y2="13" stroke="#4DB6AC" stroke-width="0.6"/>
+    <line x1="8" y1="10" x2="11" y2="13" stroke="#4DB6AC" stroke-width="0.6"/>
+  </g>
+  <!-- Jar bottom shadow -->
+  <ellipse cx="60" cy="90" rx="24" ry="3" fill="#4DB6AC" opacity="0.2"/>
+</svg>

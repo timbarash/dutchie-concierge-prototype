@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <defs>
+    <radialGradient id="bg10" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fdf8f3"/>
+      <stop offset="100%" stop-color="#f5ebe0"/>
+    </radialGradient>
+    <linearGradient id="jar10" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D09030"/>
+      <stop offset="20%" stop-color="#E0A040"/>
+      <stop offset="50%" stop-color="#D09030"/>
+      <stop offset="80%" stop-color="#E0A040"/>
+      <stop offset="100%" stop-color="#C08028"/>
+    </linearGradient>
+    <linearGradient id="lid10" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A07020"/>
+      <stop offset="100%" stop-color="#886018"/>
+    </linearGradient>
+    <radialGradient id="balm10" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#E8C070"/>
+      <stop offset="100%" stop-color="#C8A050"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="95" fill="url(#bg10)" stroke="#ddd" stroke-width="1.5"/>
+  <!-- Jar body -->
+  <path d="M55 80 L55 140 Q55 155 70 155 L130 155 Q145 155 145 140 L145 80 Q145 70 130 70 L70 70 Q55 70 55 80Z" fill="url(#jar10)"/>
+  <!-- Lid -->
+  <rect x="52" y="58" width="96" height="18" rx="5" ry="5" fill="url(#lid10)"/>
+  <!-- Lid grip lines -->
+  <line x1="60" y1="64" x2="60" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="70" y1="64" x2="70" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="80" y1="64" x2="80" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="90" y1="64" x2="90" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="100" y1="64" x2="100" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="110" y1="64" x2="110" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="120" y1="64" x2="120" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="130" y1="64" x2="130" y2="72" stroke="#967020" stroke-width="1"/>
+  <line x1="140" y1="64" x2="140" y2="72" stroke="#967020" stroke-width="1"/>
+  <!-- Label area -->
+  <rect x="62" y="90" width="76" height="50" rx="4" ry="4" fill="#FFF8E8" opacity="0.85"/>
+  <!-- Label design - leaf symbol -->
+  <path d="M100 98 Q90 105 92 115 Q95 120 100 118 Q105 120 108 115 Q110 105 100 98Z" fill="#70A040" opacity="0.5"/>
+  <!-- Jar shine -->
+  <rect x="58" y="75" width="8" height="60" rx="4" ry="4" fill="#fff" opacity="0.12"/>
+  <!-- Shadow -->
+  <ellipse cx="100" cy="165" rx="42" ry="5" fill="#000" opacity="0.07"/>
+</svg>
